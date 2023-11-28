@@ -1,0 +1,63 @@
+<instance format="XCSP3" type="COP">
+  <variables>
+    <array id="E_fq" size="[3]">
+      <domain for="E_fq[0] E_fq[1]"> 14 28 42 56 70 84 98 112 126 140 154 168 182 196 </domain>
+      <domain for="E_fq[2]"> 14 28 42 56 70 84 98 112 126 140 154 168 196 </domain>
+    </array>
+    <array id="R_fq" size="[3]">
+      <domain for="R_fq[0]"> 14 28 42 56 70 126 140 154 182 196 </domain>
+      <domain for="R_fq[1]"> 14 28 42 56 70 98 140 154 168 182 196 </domain>
+      <domain for="R_fq[2]"> 14 28 42 56 70 84 98 112 126 140 154 168 182 196 </domain>
+    </array>
+    <array id="aux_gb" note="aux_gb[i] is the ith auxiliary variable having been automatically introduced" size="[2]"> 14 28 42 56 70 84 98 112 126 140 154 168 182 196 </array>
+  </variables>
+  <constraints>
+    <group>
+      <intension> eq(dist(%0,%1),140) </intension>
+      <args> R_fq[0] E_fq[0] </args>
+      <args> R_fq[1] E_fq[1] </args>
+      <args> R_fq[2] E_fq[2] </args>
+    </group>
+    <group>
+      <intension> ge(dist(E_fq[0],%0),%1) </intension>
+      <args> R_fq[1] 20 </args>
+      <args> R_fq[2] 30 </args>
+    </group>
+    <group>
+      <intension> ge(dist(R_fq[0],%0),%1) </intension>
+      <args> E_fq[1] 20 </args>
+      <args> E_fq[2] 30 </args>
+    </group>
+    <group>
+      <intension> ge(dist(R_fq[0],%0),%1) </intension>
+      <args> R_fq[1] 20 </args>
+      <args> R_fq[2] 30 </args>
+    </group>
+    <group>
+      <intension> ge(dist(E_fq[0],%0),%1) </intension>
+      <args> E_fq[1] 20 </args>
+      <args> E_fq[2] 30 </args>
+    </group>
+    <intension> eq(E_fq[1],R_fq[2]) </intension>
+    <intension> eq(E_fq[2],R_fq[1]) </intension>
+    <group>
+      <nValues>
+        <list> %... </list>
+        <condition> (le,%0) </condition>
+      </nValues>
+      <args> 2 E_fq[0] R_fq[0] </args>
+      <args> 3 E_fq[1] R_fq[1] E_fq[2] R_fq[2] </args>
+    </group>
+    <maximum>
+      <list> E_fq[] R_fq[] </list>
+      <condition> (eq,aux_gb[0]) </condition>
+    </maximum>
+    <minimum>
+      <list> E_fq[] R_fq[] </list>
+      <condition> (eq,aux_gb[1]) </condition>
+    </minimum>
+  </constraints>
+  <objectives>
+    <minimize> sub(aux_gb[0],aux_gb[1]) </minimize>
+  </objectives>
+</instance>
